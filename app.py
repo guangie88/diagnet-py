@@ -2,6 +2,7 @@ from flask import Flask, request
 import logging
 
 app = Flask(__name__)
+app.logger.setLevel(logging.INFO)
 
 @app.route("/")
 def ping():
@@ -22,7 +23,7 @@ Body:
     request.content_length,
     request.data)
 
-    print(content)
+    app.logger.info("%s", content)
     return content
 
 if __name__ == "__main__":
