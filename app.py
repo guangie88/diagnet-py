@@ -2,6 +2,8 @@ from flask import Flask, request
 import logging
 import os
 
+from werkzeug.contrib.fixers import ProxyFix
+
 # Globals
 MIN_BODY_PRINT_LENGTH = 6
 body_print_length = os.getenv("BODY_PRINT_LENGTH")
@@ -15,6 +17,7 @@ body_print_length_rhs = body_print_length - body_print_length_lhs if body_print_
 
 app = Flask(__name__)
 app.logger.setLevel(logging.INFO)
+app.wsgi_app = ProxyFix(app.wsgi_app)
 
 @app.route("/")
 def ping():
