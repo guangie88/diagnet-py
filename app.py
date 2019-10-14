@@ -30,16 +30,13 @@ def diag(path):
         body_str_truncated = body_str
 
     content = """
-Path: {} {}
-Content-Type: {}
-Content-Length: {}
-
+Path: {} /{}
+Headers: {}
 Body:
 {}
 """.format(
     request.method, path,
-    request.content_type,
-    request.content_length,
+    request.headers,
     body_str_truncated)
 
     app.logger.info("%s", content)
