@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [ $# -ne 1 ]; then
-    >&2 echo "You need to indicate to use server or client mode!"
+if [ ! -v MODE ]; then
+    >&2 echo "You need to indicate to use server or client mode by env var MODE!"
     exit 1
 fi
 
-if [ "$1" = "server" ]; then
+if [ "${MODE}" = "server" ]; then
     python app.py
-elif [ "$1" = "client" ]; then
+elif [ "${MODE}" = "client" ]; then
     python client.py
 else
     >&2 echo "Unknown mode \"$1\" given!"
