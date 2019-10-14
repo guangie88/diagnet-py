@@ -11,6 +11,6 @@ if [ "${MODE}" = "server" ]; then
 elif [ "${MODE}" = "client" ]; then
     python client.py
 else
-    >&2 echo "Unknown mode \"$1\" given!"
+    >&2 echo "Unknown mode \"${MODE}\" given!"
     exit 1
 fi
