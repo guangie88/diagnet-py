@@ -1,5 +1,17 @@
 from flask import Flask, request
 import logging
+import os
+
+# Globals
+MIN_BODY_PRINT_LENGTH = 6
+body_print_length = os.getenv("BODY_PRINT_LENGTH")
+if body_print_length:
+    body_print_length = int(body_print_length)
+if body_print_length < MIN_BODY_PRINT_LENGTH:
+    print("Body print length cannot be less than {}, exiting...", MIN_BODY_PRINT_LENGTH)
+    exit(1)
+body_print_length_lhs = body_print_length // 2 if body_print_length else None
+body_print_length_rhs = body_print_length - body_print_length_lhs if body_print_length else None
 
 app = Flask(__name__)
 app.logger.setLevel(logging.INFO)
@@ -10,6 +22,13 @@ def ping():
 
 @app.route("/<path:path>", methods=["GET", "POST", "PUT"])
 def diag(path):
+    # For now, we are expecting JSON all the time
+    body_str = str(request.json)
+    if body_print_length and len(body_str) > body_print_length:
+        body_str_truncated = body_str[:body_print_length_lhs] + "..." + body_str[len(body_str)-body_print_length_rhs:]
+    else:
+        body_str_truncated = body_str
+
     content = """
 Path: {} {}
 Content-Type: {}
@@ -21,7 +40,7 @@ Body:
     request.method, path,
     request.content_type,
     request.content_length,
-    request.data)
+    body_str_truncated)
 
     app.logger.info("%s", content)
     return content

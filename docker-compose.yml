@@ -1,0 +1,20 @@
+version: '2'
+services:
+  server:
+    build: .
+    environment:
+      MODE: server
+      BODY_PRINT_LENGTH: 50
+    ports:
+    - 5000:5000
+  client:
+    depends_on:
+    - server
+    build: .
+    environment:
+      MODE: client
+      URL: http://server:5000/data
+      METHOD: POST
+      CONTENT_LENGTH: "100"
+      SLEEP: "5"
+      VERBOSE: "0"

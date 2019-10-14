@@ -8,6 +8,7 @@ def main():
     method = os.environ["METHOD"]
     content_length = int(os.environ["CONTENT_LENGTH"])
     sleep = int(os.environ["SLEEP"])
+    verbose = bool(os.getenv("VERBOSE", "0"))
 
     # We assume to always send JSON array of string, so the min must be 4
     if content_length < 4:
@@ -27,8 +28,9 @@ def main():
             headers={"Content-Type": CONTENT_TYPE},
             data=payload_json)
 
-        print(r.text)
-        
+        if verbose:
+            print(r.text)
+
         time.sleep(sleep)
 
 if __name__ == "__main__":
