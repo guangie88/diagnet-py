@@ -7,9 +7,9 @@ MIN_BODY_PRINT_LENGTH = 6
 body_print_length = os.getenv("BODY_PRINT_LENGTH")
 if body_print_length:
     body_print_length = int(body_print_length)
-if body_print_length < MIN_BODY_PRINT_LENGTH:
-    print("Body print length cannot be less than {}, exiting...", MIN_BODY_PRINT_LENGTH)
-    exit(1)
+    if body_print_length < MIN_BODY_PRINT_LENGTH:
+        print("Body print length cannot be less than {}, exiting...".format(MIN_BODY_PRINT_LENGTH))
+        exit(1)
 body_print_length_lhs = body_print_length // 2 if body_print_length else None
 body_print_length_rhs = body_print_length - body_print_length_lhs if body_print_length else None
 
