@@ -8,7 +8,7 @@ def main():
     method = os.environ["METHOD"]
     content_length = int(os.environ["CONTENT_LENGTH"])
     sleep = int(os.environ["SLEEP"])
-    verbose = bool(os.getenv("VERBOSE", "0"))
+    verbose = bool(os.getenv("VERBOSE", ""))
 
     # We assume to always send JSON array of string, so the min must be 4
     if content_length < 4:
